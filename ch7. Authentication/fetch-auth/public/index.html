@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <title>Fetch Auth</title>
+</head>
+
+<body>
+    <h1>Fetch Auth</h1>
+    <button id="loginBtn">로그인</button>
+    <button id="checkSessionBtn">세션 확인</button>
+    <button id='getTokenBtn'> Get Token</button>
+    <button id='getProfileBtn'>Get Profile</button>
+
+    <script>
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.addEventListener('click', async () => {
+            const res = await fetch('/login', {
+                method: 'POST',
+            });
+            const data = await res.json();
+            console.log(data);
+        })
+
+        async function checkSession() {
+            const res = await fetch("/me", {
+                method: "GET",
+            });
+            const data = await res.json();
+            console.log("세션 확인 응답:", data);
+        }
+
+        const checkSessionBtn = document.getElementById('checkSessionBtn');
+        checkSessionBtn.addEventListener("click", checkSession);
+
+        const getToken = async () => {
+            const res = await fetch('/get-token', {
+                method: 'GET',
+            });
+            const data = await res.json();
+            localStorage.setItem('token', data.token);
+        }
+
+        const getProfile = async () => {
+            const token = localStorage.getItem('token');
+            const res = await fetch('/profile', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await res.json();
+            console.log(data);
+        }
+        
+        const getTokenBtnEl = document.getElementById('getTokenBtn');
+        const getProfileBtnEl = document.getElementById('getProfileBtn');
+        getTokenBtnEl.addEventListener('click', getToken);
+        getProfileBtnEl.addEventListener('click', getProfile);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Mutation Observer Example</title>
+  </head>
+  <body>
+    <div id="box">Box</div>
+    <button id="btn">Add</button>
+
+    <script>
+      const box = document.getElementById('box');
+      const btn = document.getElementById('btn');
+
+      const observer = new MutationObserver((mutations) => {
+        console.log('DOM changed:', mutations);
+      });
+
+      observer.observe(box, { childList: true });
+
+      btn.addEventListener('click', () => {
+        const newEl = document.createElement('p');
+        newEl.textContent = 'New element added';
+        setTimeout(() => {
+            console.log('setTimeout');
+        }, 0);
+        box.appendChild(newEl);
+      });
+    </script>
+  </body>
+</html>

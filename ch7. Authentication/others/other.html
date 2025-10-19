@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title>Fetch Auth</title>
+</head>
+
+<body>
+    <h1>다른 서버에서 요청</h1>
+    <button id="checkSessionBtn">세션 확인</button>
+
+    <script>
+        async function checkSession() {
+            const res = await fetch("http://localhost:3000/me", {
+                method: "GET",
+                credentials: "include"
+            });
+            const data = await res.json();
+            console.log("세션 확인 응답:", data);
+        }
+
+        const checkSessionBtn = document.getElementById('checkSessionBtn');
+        checkSessionBtn.addEventListener("click", checkSession);
+
+    </script>
+</body>
+
+</html>
